@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
-
+    //'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'sqlsrv'),
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -67,7 +67,18 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        //Created this new sqlsrv connection. Not sure about Db_Database value?
+        'sqlsrv' => [
+        'driver' => 'sqlsrv',
+        'host' => env('DB_HOST', 'db11.meebox.net'),
+        'database' => env('DB_DATABASE', 'raukodk_7_sem_exam'),
+        'username' => env('DB_USERNAME', 'raukodk_Sem7'),
+        'password' => env('DB_PASSWORD', 'Password12!'),
+        'charset' => 'utf8',
+        'prefix' => '',
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
