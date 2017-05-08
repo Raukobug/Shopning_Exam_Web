@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\accessLevel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class accessLevelController extends Controller
 {
@@ -14,6 +15,9 @@ class accessLevelController extends Controller
      */
     public function index()
     {
+		$accessLevel = DB::table('access_level')->select('id','name')->get();
+		
+		echo json_encode($accessLevel);
         //
     }
 
@@ -24,7 +28,7 @@ class accessLevelController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,7 +39,10 @@ class accessLevelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->isMethod('post')){
+			DB::table('access_level')->insert(['name' => $request->input('name')]);
+		}    
+		//
     }
 
     /**
@@ -46,6 +53,7 @@ class accessLevelController extends Controller
      */
     public function show(accessLevel $accessLevel)
     {
+		echo "Hej";
         //
     }
 
