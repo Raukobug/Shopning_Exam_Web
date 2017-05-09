@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\account;
+use App\shop;
+use App\accessLevel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class accountController extends Controller
 {
@@ -14,7 +17,14 @@ class accountController extends Controller
      */
     public function index()
     {
-        //
+        /*$account = account::all();
+        return $account->toJson();   */
+        $accounts = DB::table('user')
+            ->join('access_level', 'user.access_level_id', '=', 'access_level.id')
+            ->join('shop', 'user.shop_id', '=', 'shop.id')
+            ->select('user.firstname', 'user.lastname', 'user.email', 'user.phone', 'user.shop_id', 'shop.name as shop_name', 'user.created_at', 'user.updated_at', 'user.access_level_id', 'access_level.name as access_level')
+            ->get(); 
+            return $accounts->toJson();
     }
 
     /**
@@ -35,7 +45,15 @@ class accountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $account = new account;
+        $account->shop_id = $request->shop_id;
+        $account->access_level_id = $request->access_level_id;
+        $account->firstname = $request->firstname;
+        $account->lastname = $request->lastname;
+        $account->email = $request->email;
+        $account->phone = $request->phone;
+        $account->password = $request->password;
+        $account->save();
     }
 
     /**
@@ -44,9 +62,15 @@ class accountController extends Controller
      * @param  \App\account  $account
      * @return \Illuminate\Http\Response
      */
-    public function show(account $account)
+    public function show($id)
     {
-        //
+        $account = account::find($id);
+        $shop = shop::find($account->shop_id);
+        $accessLevel = accessLevel::find($account->access_level_id);
+        $account->shop_id = $shop;
+        $account->access_level_id = $accessLevel;
+
+        return $account->toJson();
     }
 
     /**

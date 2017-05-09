@@ -16,17 +16,7 @@ class accessLevelController extends Controller
     public function index()
     {
         $accessLevel = accessLevel::all();
-
         return $accessLevel->toJson();
-
-        /*foreach ($ccessLevels as $ccessLevel) {
-            echo $ccessLevel->name;
-        }
-
-		/*$accessLevel = DB::table('access_level')->select('id','name')->get();
-		
-		echo json_encode($accessLevel);*/
-        //*/
     }
 
     /**
@@ -48,15 +38,9 @@ class accessLevelController extends Controller
     public function store(Request $request)
     {
         $accessLevel = new accessLevel;
-
         $accessLevel->name = $request->name;
-
         $accessLevel->save();
 
-        /*if($request->isMethod('post')){
-			DB::table('access_level')->insert(['name' => $request->input('name')]);
-		}    */
-		//
     }
 
     /**
@@ -92,7 +76,7 @@ class accessLevelController extends Controller
     public function update($id)
     {
         $accessLevel = accessLevel::find($id);
-        //I guess we need some way to change the name here, from a form
+        //NEED FORM DATA HERE
         $accessLevel->name = "Admin";
         $accessLevel->save();
     }

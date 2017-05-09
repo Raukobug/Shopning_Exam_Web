@@ -14,7 +14,8 @@ class productController extends Controller
      */
     public function index()
     {
-        //
+        $product = product::all();
+        return $product->toJson();
     }
 
     /**
@@ -35,7 +36,9 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new product;
+        $product->name = $request->name;
+        $product->save();
     }
 
     /**
@@ -44,9 +47,10 @@ class productController extends Controller
      * @param  \App\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(product $product)
+    public function show($id)
     {
-        //
+        $product = product::find($id);
+        return $product->toJson();
     }
 
     /**
@@ -67,9 +71,12 @@ class productController extends Controller
      * @param  \App\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, product $product)
+    public function update($id)
     {
-        //
+        $product = product::find($id);
+        //NEED FORM DATA HERE
+        $product->name = "RandomProductName";
+        $product->save();
     }
 
     /**
@@ -78,8 +85,9 @@ class productController extends Controller
      * @param  \App\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(product $product)
+    public function destroy($id)
     {
-        //
+        $product = product::find($id);
+        $product->delete();
     }
 }

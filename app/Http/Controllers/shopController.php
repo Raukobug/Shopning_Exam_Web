@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class shopController extends Controller
 {
@@ -14,7 +15,8 @@ class shopController extends Controller
      */
     public function index()
     {
-        //
+        $shop = shop::all();     
+        return $shop->toJson();
     }
 
     /**
@@ -35,7 +37,13 @@ class shopController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $shop = new shop;      
+
+        $shop->name = $request->name;
+        $shop->email = $request->email;
+        $shop->phone = $request->phone;
+
+        $shop->save();
     }
 
     /**
@@ -44,9 +52,10 @@ class shopController extends Controller
      * @param  \App\shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function show(shop $shop)
+    public function show($id)
     {
-        //
+        $shop = shop::find($id);
+        return $shop->toJson();
     }
 
     /**
@@ -67,9 +76,14 @@ class shopController extends Controller
      * @param  \App\shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, shop $shop)
+    public function update($id)
     {
-        //
+        $shop = shop::find($id);
+        //NEED FORM DATA HERE
+        $shop->name = "sams";
+        $shop->email = "sams@sams.dk";
+        $shop->phone = "999-9998";
+        $shop->save();
     }
 
     /**
@@ -78,8 +92,9 @@ class shopController extends Controller
      * @param  \App\shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function destroy(shop $shop)
+    public function destroy($id)
     {
-        //
+        $shop = shop::find($id);
+        $shop->delete();
     }
 }
