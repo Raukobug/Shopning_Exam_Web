@@ -19,12 +19,14 @@ class accountController extends Controller
     {
         /*$account = account::all();
         return $account->toJson();   */
-        $accounts = DB::table('user')
+        /*$accounts = DB::table('user')
             ->join('access_level', 'user.access_level_id', '=', 'access_level.id')
             ->join('shop', 'user.shop_id', '=', 'shop.id')
             ->select('user.firstname', 'user.lastname', 'user.email', 'user.phone', 'user.shop_id', 'shop.name as shop_name', 'user.created_at', 'user.updated_at', 'user.access_level_id', 'access_level.name as access_level')
             ->get(); 
-            return $accounts->toJson();
+            return $accounts->toJson();*/
+        return account::with('AccessLevel', 'shop')->get();
+
     }
 
     /**
