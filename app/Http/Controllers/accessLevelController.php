@@ -15,10 +15,18 @@ class accessLevelController extends Controller
      */
     public function index()
     {
-		$accessLevel = DB::table('access_level')->select('id','name')->get();
+        $accessLevel = accessLevel::all();
+
+        return $accessLevel->toJson();
+
+        /*foreach ($ccessLevels as $ccessLevel) {
+            echo $ccessLevel->name;
+        }
+
+		/*$accessLevel = DB::table('access_level')->select('id','name')->get();
 		
-		echo json_encode($accessLevel);
-        //
+		echo json_encode($accessLevel);*/
+        //*/
     }
 
     /**
@@ -39,9 +47,15 @@ class accessLevelController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->isMethod('post')){
+        $accessLevel = new accessLevel;
+
+        $accessLevel->name = $request->name;
+
+        $accessLevel->save();
+
+        /*if($request->isMethod('post')){
 			DB::table('access_level')->insert(['name' => $request->input('name')]);
-		}    
+		}    */
 		//
     }
 
@@ -51,10 +65,10 @@ class accessLevelController extends Controller
      * @param  \App\accessLevel  $accessLevel
      * @return \Illuminate\Http\Response
      */
-    public function show(accessLevel $accessLevel)
+    public function show($id)
     {
-		echo "Hej";
-        //
+        $accessLevel = accessLevel::find($id);
+        return $accessLevel->toJson();
     }
 
     /**
@@ -63,9 +77,9 @@ class accessLevelController extends Controller
      * @param  \App\accessLevel  $accessLevel
      * @return \Illuminate\Http\Response
      */
-    public function edit(accessLevel $accessLevel)
+    public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -75,9 +89,12 @@ class accessLevelController extends Controller
      * @param  \App\accessLevel  $accessLevel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, accessLevel $accessLevel)
+    public function update($id)
     {
-        //
+        $accessLevel = accessLevel::find($id);
+        //I guess we need some way to change the name here, from a form
+        $accessLevel->name = "Admin";
+        $accessLevel->save();
     }
 
     /**
@@ -86,8 +103,10 @@ class accessLevelController extends Controller
      * @param  \App\accessLevel  $accessLevel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(accessLevel $accessLevel)
+    public function destroy($id)
     {
-        //
+        $accessLevel = accessLevel::find($id);
+        $accessLevel->delete();
     }
+    
 }

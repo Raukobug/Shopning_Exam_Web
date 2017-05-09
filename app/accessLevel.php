@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class accessLevel extends Model
 {
-    //
+    protected $table = 'access_level';
 }
