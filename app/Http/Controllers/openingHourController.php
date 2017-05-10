@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\openingHour;
+use App\shop;
 use Illuminate\Http\Request;
 
 class openingHourController extends Controller
@@ -14,7 +15,9 @@ class openingHourController extends Controller
      */
     public function index()
     {
-        //
+        return openingHour::with(['shop' => function($q) {
+            $q->select('id', 'name');
+        }])->get();
     }
 
     /**
@@ -35,7 +38,12 @@ class openingHourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $openingHour = new openingHour;
+        $openingHour->shop_id = $request->shop_id;
+        $openingHour->day = $request->day;
+        $openingHour->open = $request->open;
+        $openingHour->close = $request->close;
+        $openingHour->save();
     }
 
     /**
@@ -44,9 +52,13 @@ class openingHourController extends Controller
      * @param  \App\openingHour  $openingHour
      * @return \Illuminate\Http\Response
      */
-    public function show(openingHour $openingHour)
+    public function show($id)
     {
-        //
+        $openingHour = openingHour::find($id);
+        $shop = shop::find($openingHour->shop_id);
+        $openingHour->shop_id = $shop;
+
+        return $openingHour->toJson();
     }
 
     /**
@@ -67,9 +79,15 @@ class openingHourController extends Controller
      * @param  \App\openingHour  $openingHour
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, openingHour $openingHour)
+    public function update($id)
     {
-        //
+        $openingHour = openingHour::find($id);
+        //NEED FORM DATA HERE
+        $openingHour->shop_id = 1;
+        $openingHour->day = "monday";
+        $openingHour->open = "12:00";
+        $openingHour->close = "22:00";
+        $openingHour->save();
     }
 
     /**
@@ -78,8 +96,9 @@ class openingHourController extends Controller
      * @param  \App\openingHour  $openingHour
      * @return \Illuminate\Http\Response
      */
-    public function destroy(openingHour $openingHour)
+    public function destroy($id)
     {
-        //
+        $openingHour = openingHour::find($id);
+        $openingHour->delete();
     }
 }

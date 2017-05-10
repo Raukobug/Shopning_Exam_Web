@@ -90,7 +90,7 @@ class accessLevelController extends Controller
     public function destroy($id)
     {
         $accessLevel = accessLevel::find($id);
-        $accessLevel->delete();
+        $accessLevel->delete();     
     }
     
 }

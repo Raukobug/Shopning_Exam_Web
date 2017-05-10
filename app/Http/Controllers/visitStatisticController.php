@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\visitStatistic;
+use App\item;
 use Illuminate\Http\Request;
 
 class visitStatisticController extends Controller
@@ -14,7 +15,8 @@ class visitStatisticController extends Controller
      */
     public function index()
     {
-        //
+        $visitStatistic = visitStatistic::all();
+        return $visitStatistic->toJson();
     }
 
     /**
@@ -35,7 +37,12 @@ class visitStatisticController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $visitStatistic = new visitStatistic;
+        $visitStatistic->item_id = $request->item_id;
+        $visitStatistic->visit_count = $request->visit_count;
+        $visitStatistic->unique_visit_count = $request->unique_visit_count;
+        $visitStatistic->date = $request->date;
+        $visitStatistic->save();
     }
 
     /**
@@ -44,9 +51,13 @@ class visitStatisticController extends Controller
      * @param  \App\visitStatistic  $visitStatistic
      * @return \Illuminate\Http\Response
      */
-    public function show(visitStatistic $visitStatistic)
+    public function show($id)
     {
-        //
+        $visitStatistic = visitStatistic::find($id);
+        $item = item::find($visitStatistic->item_id);
+        $visitStatistic->item_id = $item;
+
+        return $visitStatistic->toJson();
     }
 
     /**
@@ -67,9 +78,15 @@ class visitStatisticController extends Controller
      * @param  \App\visitStatistic  $visitStatistic
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, visitStatistic $visitStatistic)
+    public function update($id)
     {
-        //
+        $visitStatistic = visitStatistic::find($id);
+        //NEED FORM DATA HERE
+        $visitStatistic->item_id = 1;
+        $visitStatistic->visit_count = 300;
+        $visitStatistic->unique_visit_count = 150;
+        $visitStatistic->date = date("Y/m/d");
+        $visitStatistic->save();
     }
 
     /**
@@ -78,8 +95,9 @@ class visitStatisticController extends Controller
      * @param  \App\visitStatistic  $visitStatistic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(visitStatistic $visitStatistic)
+    public function destroy($id)
     {
-        //
+        $visitStatistic = visitStatistic::find($id);
+        $visitStatistic->delete();
     }
 }

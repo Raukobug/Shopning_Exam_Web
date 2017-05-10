@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class product extends Model
 {
+    public function item()
+    {
+        return $this->belongsTo('App\item');
+    }
     protected $table = 'product';
 }

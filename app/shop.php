@@ -10,5 +10,9 @@ class shop extends Model
     {
         return $this->belongsTo('account');
     }
+    public function openingHour()
+    {
+        return $this->belongsTo('OpeningHour');
+    }
     protected $table = 'shop';
 }

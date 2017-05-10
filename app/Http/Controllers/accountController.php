@@ -25,7 +25,12 @@ class accountController extends Controller
             ->select('user.firstname', 'user.lastname', 'user.email', 'user.phone', 'user.shop_id', 'shop.name as shop_name', 'user.created_at', 'user.updated_at', 'user.access_level_id', 'access_level.name as access_level')
             ->get(); 
             return $accounts->toJson();*/
-        return account::with('AccessLevel', 'shop')->get();
+        return account::with(['AccessLevel' => function($a) {
+            $a->select('id','name');
+        }
+        , 'shop' => function($q) {
+            $q->select('id', 'name');
+        }])->get();
 
     }
 
@@ -93,9 +98,18 @@ class accountController extends Controller
      * @param  \App\account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, account $account)
+    public function update($id)
     {
-        //
+        $account = account::find($id);
+        //NEED FORM DATA HERE
+        $account->shop_id = 1;
+        $account->access_level_id = 1;
+        $account->firstname = "Jens";
+        $account->lastname = "Jensen";
+        $account->email = "bobson@bobson.dk";
+        $account->password = "1234";
+        $account->save();
+
     }
 
     /**
@@ -104,8 +118,9 @@ class accountController extends Controller
      * @param  \App\account  $account
      * @return \Illuminate\Http\Response
      */
-    public function destroy(account $account)
+    public function destroy($id)
     {
-        //
+        $account = account::find($id);
+        $account->delete();
     }
 }
