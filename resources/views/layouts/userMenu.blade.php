@@ -1,10 +1,10 @@
 <!-- User Account Menu -->
-@if(!isset($Username))
+@if(Auth::check())
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->

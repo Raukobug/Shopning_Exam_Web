@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\account;
 
 class loginController extends Controller
 {
@@ -12,12 +13,13 @@ class loginController extends Controller
 		//$request->session()->put("Test", "Meh");
 		//$request->session()->forget("Test");
 		//echo $request->session()->get("Test");
-		
+					
 		return view('login.index');
 	}
 	
 	public function doLogin(Request $request){
 		
-		return view(/);
+		
+		return view("/");
 	}
 }

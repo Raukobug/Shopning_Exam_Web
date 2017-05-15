@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class account extends Model
 {
-    protected $table = 'user';
+    protected $table = 'users';
 
     public function accessLevel()
     {
