@@ -11,4 +11,8 @@ class accessLevel extends Model
         return $this->belongsTo('account');
     }
     protected $table = 'access_level';
+	
+	    protected $fillable = [
+        'id', 'name', 
+    ];
 }

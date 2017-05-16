@@ -34,23 +34,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Ro's</b> Torv</span>
     </a>
-
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
+<?php
+if (Auth::check()) {
+?>
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
+<?php
+}
+?>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+<?php
+if (Auth::check()) {
+?>
 			@include('layouts.notification')
+<?php
+}
+?>
 			@include('layouts.userMenu')
           
         </ul>
       </div>
     </nav>
   </header>
+  <?php
+if (Auth::check()) {
+?>
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
@@ -60,7 +74,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </section>
     <!-- /.sidebar -->
   </aside>
-
+<?php
+}
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     @include('layouts.contentHeader')

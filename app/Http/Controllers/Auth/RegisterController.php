@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\accessLevel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class RegisterController extends Controller
 {
@@ -36,9 +39,27 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
-
+	
+	public function showRegistrationForm(){
+		
+		$request = Request::create('/api/accessLevels', 'GET');
+		$response = Route::dispatch($request);
+		$rawAccessLevel = json_decode($response->getOriginalContent());
+		
+		foreach($rawAccessLevel as $value)   
+		{
+			$accessLevel = new accessLevel();
+			$accessLevel->fill( get_object_vars($value) );
+        $array = array_add($rawAccessLevel, $accessLevel->id, $accessLevel->name);
+		}
+	
+		
+		return view('auth/register')
+				->with("accessLevels", $array);
+	}
+	
     /**
      * Get a validator for an incoming registration request.
      *
@@ -69,7 +90,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
 			'shop_id' => 1,
-			'access_level_id' => 1
+			'access_level_id' => $data['accessLevel'],
 			]);
     }
 }

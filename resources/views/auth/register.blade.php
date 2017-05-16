@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
@@ -7,6 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
+				{{ Auth::user()->shop_id }}
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
@@ -85,6 +86,33 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+						
+						<div class="form-group{{ $errors->has('accessLevel') ? ' has-error' : '' }}">
+                            <label for="accessLevel" class="col-md-4 control-label">Role</label>
+
+                            <div class="col-md-6">
+	<select id="accessLevel" type="text" class="form-control" name="accessLevel">
+	<?php
+for ($i = 0; $i < count($accessLevels); $i++){
+		if (is_object($accessLevels[$i])) {
+    echo '<option value="'.$accessLevels[$i]->id.'">'.$accessLevels[$i]->name.'</option>';    
+    }
+	
+}
+
+?>
+  
+
+</select>
+                                
+
+                                @if ($errors->has('accessLevel'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('accessLevel') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 

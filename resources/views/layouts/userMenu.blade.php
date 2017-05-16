@@ -23,7 +23,14 @@
                   <a href="#" class="btn btn-default btn-flat">Update Info</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+				<a class="btn btn-default btn-flat" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>					
                 </div>
               </li>
             </ul>
