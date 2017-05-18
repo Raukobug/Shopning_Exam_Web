@@ -38,9 +38,9 @@ class visitStatisticController extends Controller
     public function store(Request $request)
     {
         $visitStatistic = new visitStatistic;
-        $visitStatistic->item_id = $request->item_id;
-        $visitStatistic->visit_count = $request->visit_count;
-        $visitStatistic->unique_visit_count = $request->unique_visit_count;
+        $visitStatistic->shop_id = $request->shop_id;
+        $visitStatistic->visit_count = 1;
+        $visitStatistic->unique_visit_count = 1;
         $visitStatistic->date = $request->date;
         $visitStatistic->save();
     }
@@ -78,14 +78,11 @@ class visitStatisticController extends Controller
      * @param  \App\visitStatistic  $visitStatistic
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($id, Request $request)
     {
         $visitStatistic = visitStatistic::find($id);
-        //NEED FORM DATA HERE
-        $visitStatistic->item_id = 1;
-        $visitStatistic->visit_count = 300;
-        $visitStatistic->unique_visit_count = 150;
-        $visitStatistic->date = date("Y/m/d");
+        $visitStatistic->visit_count += $request->visit_count;
+        $visitStatistic->unique_visit_count += $request->unique_visit_count;
         $visitStatistic->save();
     }
 
