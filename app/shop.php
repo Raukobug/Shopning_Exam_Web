@@ -8,11 +8,17 @@ class shop extends Model
 {
     public function account()
     {
-        return $this->belongsTo('account');
+        return $this->hasMany('App\account');
     }
     public function openingHour()
     {
-        return $this->belongsTo('OpeningHour');
+        return $this->hasMany('App\OpeningHour');
     }
+	
     protected $table = 'shop';
+	
+	    protected $fillable = [
+        'id', 'name', 
+    ];	
+
 }

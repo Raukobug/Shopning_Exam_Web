@@ -59,7 +59,7 @@ class accountController extends Controller
         $account->lastname = $request->lastname;
         $account->email = $request->email;
         $account->phone = $request->phone;
-        $account->password = $request->password;
+        $account->password = bcrypt($request->password);
         $account->save();
     }
 
@@ -72,6 +72,9 @@ class accountController extends Controller
     public function show($id)
     {
         $account = account::find($id);
+		if($account == null){
+			return "User not found!";
+		}
         $shop = shop::find($account->shop_id);
         $accessLevel = accessLevel::find($account->access_level_id);
         $account->shop_id = $shop;
@@ -98,16 +101,21 @@ class accountController extends Controller
      * @param  \App\account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($id, Request $request)
     {
         $account = account::find($id);
-        //NEED FORM DATA HERE
-        $account->shop_id = 1;
-        $account->access_level_id = 1;
-        $account->firstname = "Jens";
-        $account->lastname = "Jensen";
-        $account->email = "bobson@bobson.dk";
-        $account->password = "1234";
+		
+		if($account == null){
+			return "User not found!";
+		}
+		
+        $account->shop_id = ($request->shop_id != null ? $request->shop_id : $account->shop_id);
+        $account->access_level_id = ($request->access_level_id != null ? $request->access_level_id : $account->access_level_id);
+        $account->firstname = ($request->firstname != null ? $request->firstname : $account->firstname);
+        $account->lastname = ($request->lastname != null ? $request->lastname : $account->lastname);
+        $account->email = ($request->email != null ? $request->email : $account->email);
+        $account->phone = ($request->phone != null ? $request->phone : $account->phone);
+        $account->password = ($request->password != null ? bcrypt($request->password) : $account->password);
         $account->save();
 
     }

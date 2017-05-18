@@ -15,9 +15,10 @@ class openingHourController extends Controller
      */
     public function index()
     {
-        return openingHour::with(['shop' => function($q) {
-            $q->select('id', 'name');
-        }])->get();
+		return openingHour::all();
+        // return openingHour::with(['shop' => function($q) {
+            // $q->select('id', 'name');
+        // }])->get();
     }
 
     /**

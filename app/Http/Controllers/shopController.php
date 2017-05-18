@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\shop;
+use App\openingHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,8 +16,14 @@ class shopController extends Controller
      */
     public function index()
     {
-        $shop = shop::all();     
-        return $shop->toJson();
+        //$shop = shop::all();	
+        //return $shop->toJson();
+		
+		// return shop::with(['openingHour' => function($q) {
+             // $q->select('id', 'day');
+         // }])->get();	
+		 
+		  return shop::with(['openingHour'])->get();
     }
 
     /**

@@ -15,8 +15,8 @@ class CreateVisitStatisticTable extends Migration
     {
         Schema::create('visit_statistic', function (Blueprint $table) {
             $table->increments('id');
-			$table->integer('item_id')->unsigned();
-			$table->foreign('item_id')->references('id')->on('item');
+			$table->integer('shop_id')->unsigned();
+			$table->foreign('shop_id')->references('id')->on('shop');
 			$table->integer('visit_count');
 			$table->integer('unique_visit_count');
 			$table->date('date');

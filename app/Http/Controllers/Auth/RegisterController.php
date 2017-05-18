@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\User;
 use App\accessLevel;
+use App\shop;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -43,10 +45,15 @@ class RegisterController extends Controller
     }
 	
 	public function showRegistrationForm(){
-		
+		if(Auth::user()->access_level_id == 3){
+			return redirect()->action('HomeController@index');	
+		}
+				
 		$request = Request::create('/api/accessLevels', 'GET');
 		$response = Route::dispatch($request);
 		$rawAccessLevel = json_decode($response->getOriginalContent());
+		
+		$array = [];
 		
 		foreach($rawAccessLevel as $value)   
 		{
@@ -54,10 +61,22 @@ class RegisterController extends Controller
 			$accessLevel->fill( get_object_vars($value) );
         $array = array_add($rawAccessLevel, $accessLevel->id, $accessLevel->name);
 		}
-	
 		
+		$req = Request::create('/api/shops', 'GET');
+		$res = Route::dispatch($req);
+		$rawShops = json_decode($res->getOriginalContent());
+		
+		$shopArray = [];
+		foreach($rawShops as $value)   
+		{
+		$shop = new shop();
+		$shop->fill( get_object_vars($value) );
+        $shopArray = array_add($rawShops, $shop->id, $shop->name);
+		}
+
 		return view('auth/register')
-				->with("accessLevels", $array);
+		->with("accessLevels", $array)
+		->with("shops", $shopArray);
 	}
 	
     /**
@@ -83,14 +102,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+		if($data['shop'] == 0){
+			$shop = null;
+		}else{
+			$shop = $data['shop'];
+		}
+	
         return User::create([
 			'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
 			'phone' => $data['phone'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-			'shop_id' => 1,
-			'access_level_id' => $data['accessLevel'],
+			'shop_id' => (Auth::user()->access_level_id == 1 ? $shop : Auth::user()->shop_id),
+			'access_level_id' => (Auth::user()->access_level_id == 1 ? $data['accessLevel'] : 3),
 			]);
     }
 }

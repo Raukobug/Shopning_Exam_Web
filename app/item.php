@@ -14,9 +14,5 @@ class item extends Model
     {
         return $this->belongsTo('App\product');
     }
-    public function visitStatistic()
-    {
-        return $this->belongsTo('App\visitStatistic');
-    }
     protected $table = 'item';
 }
