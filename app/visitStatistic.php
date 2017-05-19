@@ -11,4 +11,8 @@ class visitStatistic extends Model
         return $this->belongsTo('App\item');
     }
     protected $table = 'visit_statistic';
+	
+		    protected $fillable = [
+        'id', 'shop_id', 
+    ];	
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\visitStatistic;
-use App\item;
+use App\shop;
 use Illuminate\Http\Request;
 
 class visitStatisticController extends Controller
@@ -54,8 +54,8 @@ class visitStatisticController extends Controller
     public function show($id)
     {
         $visitStatistic = visitStatistic::find($id);
-        $item = item::find($visitStatistic->item_id);
-        $visitStatistic->item_id = $item;
+        $shop = shop::find($visitStatistic->shop_id);
+        $visitStatistic->shop_id = $shop;
 
         return $visitStatistic->toJson();
     }
