@@ -19,6 +19,7 @@ Route::resource('openingHours', 'openingHourController');
 Route::resource('products', 'productController');
 Route::resource('items', 'itemController');
 Route::resource('visitStatistics', 'visitStatisticController');
+Route::put('visitStatistics/{id}', 'visitStatisticController@update');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

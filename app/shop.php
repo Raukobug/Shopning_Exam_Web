@@ -14,10 +14,14 @@ class shop extends Model
     {
         return $this->hasMany('App\OpeningHour');
     }
+	public function visitStatistic()
+    {
+        return $this->hasMany('App\visitStatistic');
+    }
 	
     protected $table = 'shop';
 	
-	    protected $fillable = [
+	protected $fillable = [
         'id', 'name', 
     ];	
 

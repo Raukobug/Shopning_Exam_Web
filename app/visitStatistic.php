@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class visitStatistic extends Model
 {
-        public function visitStatistic()
+    public function shop()
     {
-        return $this->belongsTo('App\item');
+        return $this->belongsTo('shop');
     }
     protected $table = 'visit_statistic';
 	
-		    protected $fillable = [
-        'id', 'shop_id', 
+	protected $fillable = [
+        'id', 'shop_id', 'visit_count', 'unique_visit_count'
     ];	
 }

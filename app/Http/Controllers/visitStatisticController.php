@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\visitStatistic;
 use App\shop;
 use Illuminate\Http\Request;
+use \Illuminate\Http\Response;
 
 class visitStatisticController extends Controller
 {
@@ -78,11 +79,15 @@ class visitStatisticController extends Controller
      * @param  \App\visitStatistic  $visitStatistic
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
+		//needs the x-www-form-urlencded way to post in POSTMAN.
+		//headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         $visitStatistic = visitStatistic::find($id);
-        $visitStatistic->visit_count += $request->visit_count;
         $visitStatistic->unique_visit_count += $request->unique_visit_count;
+        $visitStatistic->visit_count += $request->visit_count;
+
+		
         $visitStatistic->save();
     }
 
