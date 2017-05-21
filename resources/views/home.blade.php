@@ -64,9 +64,13 @@ print_r($visitStatistic);
 </pre>
 <?php
 $names = "";
+$uniq = "";
+$visits = "";
 foreach ($visitStatistic as $meh){
 	if(is_object($meh)){
 		$names .= "'".$meh->date ."',";
+		$uniq .= $meh->unique_visit_count . ",";
+		$visits .= $meh->visit_count . ",";
 	}
 }
 echo $names;
@@ -155,7 +159,7 @@ echo $names;
     //- BAR CHART -
     //-------------	
     var barChartData = {
-      labels: [<?php echo $names ?>],
+      labels: [<?php echo $names; ?>],
       datasets: [
         {
           label: "Unique Visitors",
@@ -165,7 +169,7 @@ echo $names;
           pointStrokeColor: "#c1c7d1",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(220,220,220,1)",
-          data: [20, 24, 31, 18, 44, 55, 53]
+          data: [<?php echo $uniq; ?>]
         },
         {
           label: "Total Visitors",
@@ -175,7 +179,7 @@ echo $names;
           pointStrokeColor: "rgba(60,141,188,1)",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(60,141,188,1)",
-          data: [31, 48, 40, 70, 86, 167, 193]
+          data: [<?php echo $visits; ?>]
         }
       ]
     };

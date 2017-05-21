@@ -17,7 +17,7 @@ class productController extends Controller
         $product = product::all();
         return $product->toJson();
     }
-
+	
     /**
      * Show the form for creating a new resource.
      *

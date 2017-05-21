@@ -25,6 +25,16 @@ class itemController extends Controller
         ])->get();
     }
 
+	public function webIndex()
+    {
+		if(1 == 0){
+			$item = account::find($id);
+			$item->delete();
+		}
+        $wares = item::where('shop_id', 1)->get();
+        return view("wares")
+				->with("wares", $wares);
+    }
     /**
      * Show the form for creating a new resource.
      *
