@@ -48,7 +48,7 @@ else{
                   <td>{{ $ware->expirationdate }}</td>
 				  <td>{{ $ware->quantity-$ware->sold }}</td>
                   <td>{!! $status !!}</td>
-				  <td style="text-align:right;" width="50%"><a href="#" class="fa fa-edit"></a> <a href="#" class="fa fa-trash"></a></td>
+				  <td style="text-align:right;" width="50%"><a href="#" class="fa fa-edit"></a> <a href="/wares/{{ $ware->id }}/removeItem" class="fa fa-trash"></a></td>
                 </tr>
 @endforeach
               </table>

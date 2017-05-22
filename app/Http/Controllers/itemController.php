@@ -6,6 +6,7 @@ use App\item;
 use App\shop;
 use App\product;
 use Illuminate\Http\Request;
+use Auth;
 
 class itemController extends Controller
 {
@@ -32,7 +33,7 @@ class itemController extends Controller
 			$item->delete();
 		}
         $wares = item::where('shop_id', 1)->get();
-        return view("wares")
+        return view("item/List")
 				->with("wares", $wares);
     }
     /**
@@ -40,11 +41,35 @@ class itemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createView()
     {
-        //
+        return view("item/Create");//
     }
 
+	
+	protected function create(Request $request)
+    {
+
+		 $p = product::where('name', '=', $request->input('name'))->first();
+		 
+		 if($p == null){
+			 $product = new product;
+			 $product->name = $request->input('name');
+			 $product->save();
+			 $p = $product;
+		 }
+		 
+		Item::create([
+			'product_id' => $p->id,
+            'quantity' => $request->input('quantity'),
+			'price' => $request->input('price'),
+            'expirationdate' => $request->input('date'),
+			'shop_id' => (Auth::user()->access_level_id == 1 ? 1 : Auth::user()->shop_id),
+			]);
+			
+		return redirect('/wares');
+    }
+	
     /**
      * Store a newly created resource in storage.
      *
@@ -88,7 +113,7 @@ class itemController extends Controller
      * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(item $item)
+    public function edit(item $id)
     {
         //
     }
@@ -123,7 +148,14 @@ class itemController extends Controller
      */
     public function destroy($id)
     {
-        $item = account::find($id);
+        $item = item::find($id);
         $item->delete();
+    }
+	
+	public function removeItem($id)
+    {
+        $item = item::find($id);
+        $item->delete();
+		return redirect('/wares');
     }
 }

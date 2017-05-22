@@ -15,4 +15,6 @@ class item extends Model
         return $this->belongsTo('App\product');
     }
     protected $table = 'item';
+	
+	protected $fillable = ['product_id', 'shop_id', 'quantity', 'price', 'expirationdate'];
 }

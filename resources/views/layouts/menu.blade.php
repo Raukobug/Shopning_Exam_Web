@@ -10,8 +10,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Show all</a></li>
-            <li><a href="#">Create new</a></li>
+            <li><a href="/wares">Show all</a></li>
+            <li><a href="/waresCreate">Create new</a></li>
           </ul>
         </li>
 		<li><a href="#"><i class="fa fa-bar-chart"></i> <span>Statistic</span></a></li>

@@ -20,4 +20,9 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/wares', 'ItemController@webIndex')->name('item');
+Route::get('/wares', 'ItemController@webIndex')->name('item')->middleware('auth');
+Route::get('/waresCreate', 'ItemController@createView')->name('item')->middleware('auth');
+Route::post('waresCreate', 'ItemController@create')->name('item')->middleware('auth');
+Route::get('/wares/{id}/removeItem', 'ItemController@removeItem', function ($id) {
+	
+})->name('item')->middleware('auth');;
