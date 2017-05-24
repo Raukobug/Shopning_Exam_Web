@@ -113,11 +113,24 @@ class itemController extends Controller
      * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(item $id)
+    public function edit($id)
     {
-        //
+        $item = item::find($id);
+
+        return view('item/Edit')->with('item', $item);
+		//
     }
 
+	
+	public function updateFromView(Request $request, $id)
+    {
+        $item = item::find($id);
+        $item->quantity = $request->quantity;
+        $item->discount = $request->discount;
+        $item->offer = $request->offer;
+        $item->save();
+		return redirect('/wares');
+    }
     /**
      * Update the specified resource in storage.
      *

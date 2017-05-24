@@ -21,8 +21,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/wares', 'ItemController@webIndex')->name('item')->middleware('auth');
-Route::get('/waresCreate', 'ItemController@createView')->name('item')->middleware('auth');
-Route::post('waresCreate', 'ItemController@create')->name('item')->middleware('auth');
+Route::get('/wares/create', 'ItemController@createView')->name('item')->middleware('auth');
+Route::post('wares/create', 'ItemController@create')->name('item')->middleware('auth');
+
+Route::get('/wares/edit/{id}', 'ItemController@edit', function ($id) {
+	
+})->name('item')->middleware('auth');;
+
+Route::post('/wares/edit/{id}', 'ItemController@updateFromView', function ($id) {
+	
+})->name('item')->middleware('auth');;
+
 Route::get('/wares/{id}/removeItem', 'ItemController@removeItem', function ($id) {
 	
 })->name('item')->middleware('auth');;
