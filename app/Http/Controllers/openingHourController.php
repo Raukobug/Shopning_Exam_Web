@@ -80,14 +80,19 @@ class openingHourController extends Controller
      * @param  \App\openingHour  $openingHour
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $openingHour = openingHour::find($id);
-        //NEED FORM DATA HERE
-        $openingHour->shop_id = 1;
-        $openingHour->day = "monday";
-        $openingHour->open = "12:00";
-        $openingHour->close = "22:00";
+
+        if ($request->has('day')) {
+            $openingHour->day = $request->day;
+        }
+        if ($request->has('close')) {
+            $openingHour->close = $request->close;
+        }
+        if ($request->has('open')) {
+            $openingHour->open = $request->open;
+        }
         $openingHour->save();
     }
 
