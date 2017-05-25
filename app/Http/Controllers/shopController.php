@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Session;
 use App\shop;
 use App\openingHour;
 use Illuminate\Http\Request;
@@ -25,15 +27,45 @@ class shopController extends Controller
 		 
 		  return shop::with(['openingHour'])->get();
     }
+	
+	public function webIndex()
+    {
+        $shops = shop::all();
+        return view("shop/List")
+				->with("shops", $shops);
+    }
+	
+	public function setShop($id)
+    {
+		if($id == Session::get('shopId')){
+			Session::forget('shopId');
+		}
+		else{
+			Session::put('shopId', $id);	
+		}
 
+		
+		return redirect('/shops');
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+	public function createView()
     {
-        //
+        return view("shop/Create");
+    }
+	 
+	protected function create(Request $request)
+    {		
+		Shop::create([
+            'name' => $request->input('name'),
+			'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+			]);
+			
+		return redirect('/shops');
     }
 
     /**
@@ -71,9 +103,23 @@ class shopController extends Controller
      * @param  \App\shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function edit(shop $shop)
+    public function edit($id)
     {
-        //
+        $shop = shop::find($id);
+
+        return view('shop/Edit')->with('shop', $shop);
+		//
+    }
+
+	
+	public function updateFromView(Request $request, $id)
+    {
+        $shop = shop::find($id);
+        $shop->name = $request->name;
+        $shop->email = $request->email;
+        $shop->phone = $request->phone;
+        $shop->save();
+		return redirect('/shops');
     }
 
     /**
@@ -103,5 +149,12 @@ class shopController extends Controller
     {
         $shop = shop::find($id);
         $shop->delete();
+    }
+	
+	public function removeShop($id)
+    {
+        $shop = shop::find($id);
+        $shop->delete();
+		return redirect('/shops');
     }
 }

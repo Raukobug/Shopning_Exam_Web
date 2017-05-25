@@ -11,26 +11,20 @@
               <li class="user-header">
 
                 <p>
-                  Alexander Pierce - Web Developer
-				  <small>Email: test@test.dk</small>
-				  <small>Phone: 88 88 88 88</small>
+				  <small>Email: {{ Auth::user()->email }}</small>
+				  <small>Phone: {{ Auth::user()->phone }}</small>
                 </p>
               </li>
               
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Update Info</a>
+                  <a href="/users/edit/{{ Auth::user()->id }}" class="btn btn-default btn-flat">Update Info</a>
                 </div>
                 <div class="pull-right">
-				<a class="btn btn-default btn-flat" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+				<a class="btn btn-default btn-flat" href="/Logout">
                                             Logout
-                                        </a>
-					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>					
+                                        </a>				
                 </div>
               </li>
             </ul>

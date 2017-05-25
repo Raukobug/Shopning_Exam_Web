@@ -26,23 +26,42 @@ class HomeController extends Controller
      */
     public function index()
     {
-		$request = Request::create('/api/visitStatistics', 'GET');
-		$response = Route::dispatch($request);
-		$rawVisitStatistic = json_decode($response->getOriginalContent());
-		
-		$array = [];
-		
-		foreach($rawVisitStatistic as $value)   
-		{
-			$visitStatistic = new visitStatistic();
-			$visitStatistic->fill( get_object_vars($value) );
-			// if(Auth::user()->shop_id == null || Auth::user()->shop_id == $visitStatistic->shop_id){
-				// $array = array_add($rawVisitStatistic, $visitStatistic->id, $visitStatistic->shop_id);
-			// }
-			if($value->shop_id == 1){
-				array_push($array, $value);			
+		if(Auth::user()->shop_id == null){
+			$request = Request::create('/api/visitStatistics', 'GET');
+			$response = Route::dispatch($request);
+			$rawVisitStatistic = json_decode($response->getOriginalContent());
+			
+			$array = [];
+			
+			foreach($rawVisitStatistic as $value)   
+			{
+				$visitStatistic = new visitStatistic();
+				$visitStatistic->fill( get_object_vars($value) );
+				// if(Auth::user()->shop_id == null || Auth::user()->shop_id == $visitStatistic->shop_id){
+					// $array = array_add($rawVisitStatistic, $visitStatistic->id, $visitStatistic->shop_id);
+				// }
+					array_push($array, $value);		
 			}
+		}else{
+			$request = Request::create('/api/visitStatistics', 'GET');
+			$response = Route::dispatch($request);
+			$rawVisitStatistic = json_decode($response->getOriginalContent());
+			
+			$array = [];
+			
+			foreach($rawVisitStatistic as $value)   
+			{
+				$visitStatistic = new visitStatistic();
+				$visitStatistic->fill( get_object_vars($value) );
+				// if(Auth::user()->shop_id == null || Auth::user()->shop_id == $visitStatistic->shop_id){
+					// $array = array_add($rawVisitStatistic, $visitStatistic->id, $visitStatistic->shop_id);
+				// }
+				if($value->shop_id == Auth::user()->shop_id){
+					array_push($array, $value);			
+				}
+			}			
 		}
+
 		
         return view('home')
 		->with("visitStatistic", $array);

@@ -22,7 +22,7 @@ class shop extends Model
     protected $table = 'shop';
 	
 	protected $fillable = [
-        'id', 'name', 
+        'id', 'name', 'email', 'phone'
     ];	
 
 }

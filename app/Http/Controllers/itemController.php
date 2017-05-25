@@ -7,6 +7,7 @@ use App\shop;
 use App\product;
 use Illuminate\Http\Request;
 use Auth;
+use Session;
 
 class itemController extends Controller
 {
@@ -28,11 +29,13 @@ class itemController extends Controller
 
 	public function webIndex()
     {
-		if(1 == 0){
-			$item = account::find($id);
-			$item->delete();
+		if(Session::get('shopId')){
+			$User_Shop_Id = Session::get('shopId');
+		}else{
+			$User_Shop_Id  = Auth::user()->shop_id;
 		}
-        $wares = item::where('shop_id', 1)->get();
+		
+        $wares = item::where('shop_id', $User_Shop_Id)->get();
         return view("item/List")
 				->with("wares", $wares);
     }
@@ -43,12 +46,18 @@ class itemController extends Controller
      */
     public function createView()
     {
-        return view("item/Create");//
+        return view("item/Create");
     }
 
 	
 	protected function create(Request $request)
     {
+		
+		if(Session::get('shopId')){
+			$User_Shop_Id = Session::get('shopId');
+		}else{
+			$User_Shop_Id  = Auth::user()->shop_id;
+		}
 
 		 $p = product::where('name', '=', $request->input('name'))->first();
 		 
@@ -64,7 +73,7 @@ class itemController extends Controller
             'quantity' => $request->input('quantity'),
 			'price' => $request->input('price'),
             'expirationdate' => $request->input('date'),
-			'shop_id' => (Auth::user()->access_level_id == 1 ? 1 : Auth::user()->shop_id),
+			'shop_id' => (Auth::user()->access_level_id == 1 ? $User_Shop_Id : Auth::user()->shop_id),
 			]);
 			
 		return redirect('/wares');

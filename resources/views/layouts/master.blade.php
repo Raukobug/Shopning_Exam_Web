@@ -55,11 +55,17 @@ if (Auth::check()) {
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+		
 <?php
-if (Auth::check()) {
+
+if (Auth::check() && 1 == 2) {
+	if(Auth::user()->access_level_id != 1){
+		
+
 ?>
 			@include('layouts.notification')
 <?php
+	}
 }
 ?>
 			@include('layouts.userMenu')

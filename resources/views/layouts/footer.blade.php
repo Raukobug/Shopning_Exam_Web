@@ -5,5 +5,5 @@
       
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2017 <a href="#">Ro's Torv</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2017 <a href="/">Ro's Torv</a>.</strong> All rights reserved.
   </footer>

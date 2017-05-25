@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\account;
 use App\shop;
 use App\accessLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class accountController extends Controller
 {
@@ -32,6 +35,24 @@ class accountController extends Controller
             $q->select('id', 'name');
         }])->get();
 
+    }
+	
+	public function webIndex()
+    {
+		
+		if(Auth::user()->shop_id != null){
+				$accounts = account::with([
+				'shop' => function($q) {$q->select('id', 'name');
+				}])->where('shop_id', Auth::user()->shop_id)->get();
+		}else{
+				$accounts = account::with([
+				'shop' => function($q) {$q->select('id', 'name');
+				}])->get();
+		}
+		
+        
+        return view("user/List")
+				->with("users", $accounts);
     }
 
     /**
@@ -89,9 +110,25 @@ class accountController extends Controller
      * @param  \App\account  $account
      * @return \Illuminate\Http\Response
      */
-    public function edit(account $account)
+    public function edit($id)
     {
-        //
+        $user = account::find($id);
+
+        return view('user/Edit')->with('user', $user);
+		//
+    }
+
+	
+	public function updateFromView(Request $request, $id)
+    {
+        $account = account::find($id);
+        $account->firstname = $request->firstname;
+        $account->lastname = $request->lastname;
+        $account->email = $request->email;
+        $account->phone = $request->phone;
+        $account->password = bcrypt($request->password);
+        $account->save();
+		return redirect('/users');
     }
 
     /**
@@ -130,5 +167,27 @@ class accountController extends Controller
     {
         $account = account::find($id);
         $account->delete();
+    }
+	
+	public function removeUser($id)
+    {
+        $user = account::find($id);
+        $user->delete();
+		return redirect('/users');
+    }
+	
+	public function logout(){
+		Session::forget('shopId');
+		Auth::logout();
+		return redirect('/');
+	}
+	
+	protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'firstname' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
     }
 }
