@@ -15,6 +15,8 @@
             <li><a href="/shops/create">Create new</a></li>
           </ul>
         </li>
+@else
+		<li class="active"><a href="/shops/edit/{{ Auth::user()->shop_id }}"><i class="fa fa-dashboard"></i> <span>Shops</span></a></li>
 @endif
 @if(Auth::user()->shop_id != null || Session::get('shopId') != null)
         <li class="treeview">
