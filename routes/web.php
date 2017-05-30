@@ -21,58 +21,58 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/Logout', 'AccountController@logout')->name('logout');
+Route::get('/Logout', 'accountController@logout')->name('logout');
 
 //Wares
-Route::get('/wares', 'ItemController@webIndex')->name('item')->middleware('auth');
-Route::get('/wares/create', 'ItemController@createView')->name('item')->middleware('auth');
-Route::post('wares/create', 'ItemController@create')->name('item')->middleware('auth');
+Route::get('/wares', 'itemController@webIndex')->name('item')->middleware('auth');
+Route::get('/wares/create', 'itemController@createView')->name('item')->middleware('auth');
+Route::post('wares/create', 'itemController@create')->name('item')->middleware('auth');
 
-Route::get('/wares/edit/{id}', 'ItemController@edit', function ($id) {
+Route::get('/wares/edit/{id}', 'itemController@edit', function ($id) {
 	
 })->name('item')->middleware('auth');
 
-Route::post('/wares/edit/{id}', 'ItemController@updateFromView', function ($id) {
+Route::post('/wares/edit/{id}', 'itemController@updateFromView', function ($id) {
 	
 })->name('item')->middleware('auth');
 
-Route::get('/wares/{id}/removeItem', 'ItemController@removeItem', function ($id) {
+Route::get('/wares/{id}/removeItem', 'itemController@removeItem', function ($id) {
 	
 })->name('item')->middleware('auth');
 
 //Shops
 Route::get('/shops', 'shopController@webIndex')->name('shops')->middleware('auth');
-Route::get('/shops/create', 'ShopController@createView')->name('shops')->middleware('auth');
-Route::post('shops/create', 'ShopController@create')->name('shops')->middleware('auth');
+Route::get('/shops/create', 'shopController@createView')->name('shops')->middleware('auth');
+Route::post('shops/create', 'shopController@create')->name('shops')->middleware('auth');
 
-Route::get('/shops/edit/{id}', 'ShopController@edit', function ($id) {
+Route::get('/shops/edit/{id}', 'shopController@edit', function ($id) {
 	
 })->name('shops')->middleware('auth');
 
-Route::get('/shops/active/{id}', 'ShopController@setShop', function ($id) {
+Route::get('/shops/active/{id}', 'shopController@setShop', function ($id) {
 	
 })->name('shops')->middleware('auth');
 
-Route::post('/shops/edit/{id}', 'ShopController@updateFromView', function ($id) {
+Route::post('/shops/edit/{id}', 'shopController@updateFromView', function ($id) {
 	
 })->name('shops')->middleware('auth');
 
-Route::get('/shops/{id}/removeShop', 'ShopController@removeShop', function ($id) {
+Route::get('/shops/{id}/removeShop', 'shopController@removeShop', function ($id) {
 	
 })->name('shops')->middleware('auth');
 
 //Users
 
-Route::get('/users', 'AccountController@webIndex')->name('users')->middleware('auth');
+Route::get('/users', 'accountController@webIndex')->name('users')->middleware('auth');
 
-Route::get('/users/edit/{id}', 'AccountController@edit', function ($id) {
+Route::get('/users/edit/{id}', 'accountController@edit', function ($id) {
 	
 })->name('users')->middleware('auth');
 
-Route::post('/users/edit/{id}', 'AccountController@updateFromView', function ($id) {
+Route::post('/users/edit/{id}', 'accountController@updateFromView', function ($id) {
 	
 })->name('users')->middleware('auth');
 
-Route::get('/users/{id}/removeUser', 'AccountController@removeUser', function ($id) {
+Route::get('/users/{id}/removeUser', 'accountController@removeUser', function ($id) {
 	
 })->name('users')->middleware('auth');
