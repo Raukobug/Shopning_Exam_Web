@@ -16,7 +16,7 @@
           </ul>
         </li>
 @else
-		<li class="active"><a href="/shops/edit/{{ Auth::user()->shop_id }}"><i class="fa fa-dashboard"></i> <span>Shops</span></a></li>
+		<li><a href="/shops/edit/{{ Auth::user()->shop_id }}"><i class="fa fa-dashboard"></i> <span>Shops</span></a></li>
 @endif
 @if(Auth::user()->shop_id != null || Session::get('shopId') != null)
         <li class="treeview">
@@ -30,7 +30,9 @@
             <li><a href="/wares/create">Create new</a></li>
           </ul>
         </li>
+		{{--
 		<li><a href="#"><i class="fa fa-bar-chart"></i> <span>Statistic</span></a></li>
+		--}}
 @endif
 @if(Auth::user()->access_level_id == 1 || Auth::user()->access_level_id == 2)
 		<li class="treeview">

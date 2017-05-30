@@ -39,6 +39,7 @@ class itemController extends Controller
         return view("item/List")
 				->with("wares", $wares);
     }
+	
     /**
      * Show the form for creating a new resource.
      *
@@ -125,17 +126,17 @@ class itemController extends Controller
     public function edit($id)
     {
         $item = item::find($id);
-
+		$item->discount = $item->discount == 0 ? $item->discount :(1-$item->discount/$item->price)*100;
         return view('item/Edit')->with('item', $item);
 		//
     }
-
 	
 	public function updateFromView(Request $request, $id)
     {
         $item = item::find($id);
-        $item->quantity = $request->quantity;
-        $item->discount = $request->discount;
+        $item->quantity = $request->quantity;	
+		$item->price = $request->price;		
+        $item->discount = $request->discount == 0 ? $request->discount : $item->price - (($item->price * $request->discount) / 100);
         $item->offer = $request->offer;
         $item->save();
 		return redirect('/wares');
@@ -180,4 +181,5 @@ class itemController extends Controller
         $item->delete();
 		return redirect('/wares');
     }
+	
 }
