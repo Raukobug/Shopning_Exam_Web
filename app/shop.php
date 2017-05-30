@@ -12,7 +12,7 @@ class shop extends Model
     }
     public function openingHour()
     {
-        return $this->hasMany('App\OpeningHour');
+        return $this->hasMany('App\openingHour');
     }
 	public function visitStatistic()
     {
