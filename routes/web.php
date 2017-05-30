@@ -41,7 +41,7 @@ Route::get('/wares/{id}/removeItem', 'ItemController@removeItem', function ($id)
 })->name('item')->middleware('auth');
 
 //Shops
-Route::get('/shops', 'ShopController@webIndex')->name('shops')->middleware('auth');
+Route::get('/shops', 'shopController@webIndex')->name('shops')->middleware('auth');
 Route::get('/shops/create', 'ShopController@createView')->name('shops')->middleware('auth');
 Route::post('shops/create', 'ShopController@create')->name('shops')->middleware('auth');
 
