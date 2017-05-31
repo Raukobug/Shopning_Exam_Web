@@ -124,7 +124,7 @@ class accountController extends Controller
         $account = account::find($id);
         $account->firstname = $request->firstname;
         $account->lastname = $request->lastname;
-		if ($account->email != $request->email;){
+		if ($account->email != $request->email){
 			$account->email = $request->email;
 		}       
         $account->phone = $request->phone;
