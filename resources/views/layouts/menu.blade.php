@@ -18,7 +18,7 @@
 @elseif(Auth::user()->access_level_id == 2)
 		<li><a href="/shops/edit/{{ Auth::user()->shop_id }}"><i class="fa fa-dashboard"></i> <span>Shop Info</span></a></li>
 @endif
-@if((Auth::user()->shop_id != null || Session::get('shopId') != null)
+@if(Auth::user()->shop_id != null || Session::get('shopId') != null)
         <li class="treeview">
           <a href="#"><i class="fa fa-shopping-cart"></i> <span>Products</span>
             <span class="pull-right-container">
