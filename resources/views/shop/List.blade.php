@@ -48,7 +48,7 @@
 @endsection
 
 @section('title')
-Products
+Shops
 @endsection
 
 @section('bredcrum')

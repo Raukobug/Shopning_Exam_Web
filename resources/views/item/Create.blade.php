@@ -82,7 +82,7 @@
 @endsection
 
 @section('title')
-Products
+Create Product
 @endsection
 
 @section('bredcrum')

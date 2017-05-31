@@ -6,7 +6,7 @@
 @endsection
 
 @section('title')
-         Create new user
+         Create New User
 @endsection
 
 @section('content')

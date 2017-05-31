@@ -68,7 +68,7 @@
 @endsection
 
 @section('title')
-Products
+Update Shop
 @endsection
 
 @section('bredcrum')

@@ -52,7 +52,7 @@
 @endsection
 
 @section('title')
-Products
+Users
 @endsection
 
 @section('bredcrum')

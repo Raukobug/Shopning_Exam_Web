@@ -104,11 +104,11 @@
 @endsection
 
 @section('title')
-Products
+Update User
 @endsection
 
 @section('bredcrum')
-	<li><a href="/shops"><i class="fa fa-home"></i>Shops</a></li>
+	<li><a href="/users"><i class="fa fa-users"></i>User</a></li>
 	<li class="active">Update</li>
 @endsection
 
