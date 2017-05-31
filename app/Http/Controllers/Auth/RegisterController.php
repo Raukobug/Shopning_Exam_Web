@@ -119,4 +119,9 @@ class RegisterController extends Controller
 			'access_level_id' => (Auth::user()->access_level_id == 1 ? $data['accessLevel'] : 3),
 			]);
     }
+	
+	public function register(Request $request)
+	{
+		return redirect()->action('AccountController@index');
+	}
 }
