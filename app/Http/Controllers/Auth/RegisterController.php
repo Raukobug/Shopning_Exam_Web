@@ -122,6 +122,6 @@ class RegisterController extends Controller
 	
 	public function register(Request $request)
 	{
-		return redirect()->action('accountController@index');
+		return redirect()->action('webIndexController@index');
 	}
 }
