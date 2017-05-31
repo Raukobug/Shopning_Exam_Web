@@ -103,7 +103,9 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-		if($data['shop'] == 0){
+		if(Auth::user()->shop_id != null){
+			$shop = Auth::user()->shop_id;
+		}elseif($data['shop'] == 0){
 			$shop = null;
 		}else{
 			$shop = $data['shop'];
@@ -115,7 +117,7 @@ class RegisterController extends Controller
 			'phone' => $data['phone'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-			'shop_id' => (Auth::user()->access_level_id == 1 ? $shop : Auth::user()->shop_id),
+			'shop_id' => $shop,
 			'access_level_id' => (Auth::user()->access_level_id == 1 ? $data['accessLevel'] : 3),
 			]);
     }
